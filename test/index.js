@@ -31,7 +31,7 @@ describe('x-xss-protection', function () {
   it('enables it for supported browsers', function (done) {
     each(this.enabledBrowsers, function (useragent, callback) {
       request(this.app).get('/').set('User-Agent', useragent)
-        .expect('X-XSS-Protection', '1; mode=block', callback)
+        .expect('X-XSS-Protection', '1; mode=block;', callback)
     }.bind(this), done)
   })
 
@@ -44,12 +44,12 @@ describe('x-xss-protection', function () {
 
   it('sets header if there is an empty user-agent', function (done) {
     request(this.app).get('/').set('User-Agent', '')
-      .expect('X-XSS-Protection', '1; mode=block', done)
+      .expect('X-XSS-Protection', '1; mode=block;', done)
   })
 
   it('sets header if there is no user-agent', function (done) {
     request(this.app).get('/').unset('User-Agent')
-      .expect('X-XSS-Protection', '1; mode=block', done)
+      .expect('X-XSS-Protection', '1; mode=block;', done)
   })
 
   it('allows you to force the header for unsupported browsers', function (done) {
@@ -61,7 +61,7 @@ describe('x-xss-protection', function () {
 
     each(this.disabledBrowsers, function (useragent, callback) {
       request(app).get('/').set('User-Agent', useragent)
-        .expect('X-XSS-Protection', '1; mode=block', callback)
+        .expect('X-XSS-Protection', '1; mode=block;', callback)
     }, done)
   })
 
